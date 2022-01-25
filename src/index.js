@@ -7,10 +7,14 @@ console.log("working");
 const API_KEY = '2fa068cac41b91284b8fae107e0f1ed9';
 const textfield = document.querySelector("#weather")
 
+//event listener for city search
+let submitButton = document.getElementById("searchButton")
+// let submitValue = ;
+submitButton.addEventListener("click", getWeather(document.getElementById("citySearch").value));
 
 
 async function getWeather(city){
-    city = "Tauranga";
+    // city = "Tauranga";
     
     try {  
         
@@ -18,7 +22,7 @@ async function getWeather(city){
     const data = await weather.json();
     let cityName = data.name;
     let temp = data.main.temp;
-    textfield.innerText = `The weather for ${cityName} is ${temp}`
+    textfield.innerText = `The weather for ${cityName} is ${temp} degrees (celcius)`
    
     } 
     catch (error) {
@@ -26,4 +30,4 @@ async function getWeather(city){
     }
     
 }
-getWeather();
+// getWeather();
