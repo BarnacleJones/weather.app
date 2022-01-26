@@ -10,7 +10,11 @@ const textfield = document.querySelector("#weather")
 //event listener for city search
 let submitButton = document.getElementById("searchButton")
 // let submitValue = ;
-submitButton.addEventListener("click", getWeather(document.getElementById("citySearch").value));
+
+//dont know why the async e=> works - got it from here
+//https://stackoverflow.com/questions/50623279/js-event-handler-async-function)
+
+submitButton.addEventListener("click", async e=> getWeather(document.getElementById("citySearch").value));
 
 
 async function getWeather(city){
