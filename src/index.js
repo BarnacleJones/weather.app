@@ -30,10 +30,10 @@ async function getWeather(city){
         text = 'hot weather';
     }
     else if (temp <= 19 && temp >= 15) {
-        text = "comfortable"
+        text = "good weather"
     }
     else if (temp <= 14) {
-        text = "cold"
+        text = "cold weather"
     }
     newImage(text)
     } 
