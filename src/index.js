@@ -11,6 +11,10 @@ let text;
 
 //event listener for city search
 let submitButton = document.getElementById("searchButton")
+document.getElementById("citySearch").addEventListener("keypress", function(e)
+{ if(e.which === 13)//code number for enter key
+    getWeather(document.getElementById("citySearch").value)
+  });
 
 
 //dont know why the async e=> works - got it from here
@@ -26,7 +30,7 @@ async function getWeather(city){
     let cityName = data.name;
     let temp = data.main.temp;
     textfield.innerText = `The weather for ${cityName} is ${temp} degrees (celcius)`   
-    if (temp >=20 ) {
+    if (temp >=19 ) {
         text = 'hot weather';
     }
     else if (temp <= 19 && temp >= 15) {
@@ -55,7 +59,7 @@ async function getLocation(){
     ipfield.innerText = connectingIP;
     userlocation.innerText = connectingLocation;   
     console.log(connectingIP, connectingLocation) 
-    getWeather("Wellington")
+    getWeather(connectingLocation)
         
     } catch (error) {
         alert("something broke retrieving your location")
@@ -71,8 +75,9 @@ async function newImage(text){
     
     const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=mHGoGQ8ruy8tOm3ZKwwGyVZzLky2wMMn&s=${text}`, {mode: 'cors'})
     const gifdata = await response.json();
+    console.log(gifdata)
     //to see full available info from object returned
     
-    img.src = gifdata.data.images.original.url;
+    img.src = gifdata.data.images.downsized_large.url;
   }
 

@@ -1,11 +1,45 @@
 body{
     background-color: #503892;
+    
+}
+
+.container{
+    background-color: #E6DFDA;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    border-radius: 15px;
+    opacity: 0.8;
+    
 }
 
 h1{
-    color: #87C34E;
+    color: #70994a;
 }
 
 h2{
-    color: #87C34E;
+    color: #70994a;
+}
+
+#citySearch{
+    width: 50%;
+} 
+
+img{ 
+    width: 30vw;
+    align-self: center;
+}
+
+@media (max-width: 930px) {
+
+    img{ 
+        width: 80vw;
+        align-self: center;
+    }
+#citySearch{
+    width: 90%;
+}
 }
