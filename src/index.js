@@ -1,15 +1,17 @@
 import "./style.css";
+import  {API_KEY, IPAPI_KEY} from "./api";
 
-console.log("working");
 
-//open weather API 2fa068cac41b91284b8fae107e0f1ed9
-
-const API_KEY = '2fa068cac41b91284b8fae107e0f1ed9';
-const textfield = document.querySelector("#weather")
+//variables
+const textfield = document.querySelector("#weather");
+let ipfield = document.getElementById("ipAddress");
+let userlocation = document.getElementById("userLocation");
+const img = document.querySelector('img');
+let text;
 
 //event listener for city search
 let submitButton = document.getElementById("searchButton")
-// let submitValue = ;
+
 
 //dont know why the async e=> works - got it from here
 //https://stackoverflow.com/questions/50623279/js-event-handler-async-function)
@@ -18,20 +20,59 @@ submitButton.addEventListener("click", async e=> getWeather(document.getElementB
 
 
 async function getWeather(city){
-    // city = "Tauranga";
-    
-    try {  
-        
-    const weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2fa068cac41b91284b8fae107e0f1ed9`, {mode: 'cors'});
+     try {          
+    const weather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`, {mode: 'cors'});
     const data = await weather.json();
     let cityName = data.name;
     let temp = data.main.temp;
-    textfield.innerText = `The weather for ${cityName} is ${temp} degrees (celcius)`
-   
+    textfield.innerText = `The weather for ${cityName} is ${temp} degrees (celcius)`   
+    if (temp >=20 ) {
+        text = 'hot weather';
+    }
+    else if (temp <= 19 && temp >= 15) {
+        text = "comfortable"
+    }
+    else if (temp <= 14) {
+        text = "cold"
+    }
+    newImage(text)
     } 
     catch (error) {
         textfield.innerText = "404 error invalid city";
     }
     
 }
-// getWeather();
+
+
+async function getLocation(){
+    try {
+    const location = await fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${IPAPI_KEY}`, {mode: 'cors'})
+    const locationData = await location.json();
+    let connectingLocation = locationData.city;
+    let connectingIP = locationData.ip_address;
+    // connectingIP = ipfield;
+    // connectingLocation = userlocation;
+    ipfield.innerText = connectingIP;
+    userlocation.innerText = connectingLocation;   
+    console.log(connectingIP, connectingLocation) 
+    getWeather("Wellington")
+        
+    } catch (error) {
+        alert("something broke retrieving your location")
+    }
+    
+    
+}
+
+getLocation();
+
+
+async function newImage(text){
+    
+    const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=mHGoGQ8ruy8tOm3ZKwwGyVZzLky2wMMn&s=${text}`, {mode: 'cors'})
+    const gifdata = await response.json();
+    //to see full available info from object returned
+    
+    img.src = gifdata.data.images.original.url;
+  }
+
